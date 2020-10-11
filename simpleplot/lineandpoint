@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import argparse
+import matplotlib.pyplot as plt
+import numpy as np
+import re
+
+
+
+def csv_list(string):
+    if re.match(r'^(?:\d+(?:\.\d+)?)(,(?:\d+(?:\.\d+)?)?)*$', string):
+        return [int(n) for n in string.split(',')]
+    raise argparse.ArgumentTypeError("'{}' is not a csv list of numbers")
+
+
+def point(string):
+    point = csv_list(string)
+    if len(point) != 2:
+        raise argparse.ArgumentTypeError("A point for plotting must only be 2D")
+    return point
+
+
+def get_args():
+    a = argparse.ArgumentParser()
+    a.add_argument("-s", "--step", help="X-res", default=0.1, type=int)
+    a.add_argument("-d", "--degree", help="Polynomial fit degree", default=2, type=int)
+    a.add_argument("-p", "--point", help="Point to plot", type=point)
+    a.add_argument("x_points", help="CSV values to plot on X axis", type=csv_list)
+    a.add_argument("y_points", help="CSV values to plot on Y axis", type=csv_list)
+    return a.parse_args()
+
+
+if __name__ == "__main__":
+    args = get_args()
+
+    xvals = np.arange(np.min(args.x_points), np.max(args.x_points), args.step)
+    fit = np.polyfit(args.x_points, args.y_points, args.degree)
+    plt.plot(xvals, np.polyval(fit, xvals - xvals[0]))
+    if args.point:
+        plt.plot(args.point[0], args.point[1], 'rx')
+    plt.savefig("test.png")

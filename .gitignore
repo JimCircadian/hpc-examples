@@ -1,2 +1,9 @@
 venv/
 *.png
+*.npz
+*.csv
+*.pyc
+.ipynb_checkpoints/
+dask_worker_space/
+.idea/
+*.lock

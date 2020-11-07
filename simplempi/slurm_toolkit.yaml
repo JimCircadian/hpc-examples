@@ -1,0 +1,51 @@
+---
+slurm_toolkit:
+  vars:         {}
+  pre_process:  []
+  post_process: 
+  - name:       execute
+    args:
+      cmd:      /usr/bin/rmdir data
+  batches:
+  - name:       ct1
+    templatedir:  ../template
+    templates:
+    - slurm.sh.j2
+    job_file:   slurm.sh
+    cluster:    short
+    basedir:    ./batch1
+    email:      test@example.org
+    nodes:      2
+    ntasks:     16
+    length:     4:00:00
+    pre_batch:  
+    - name:     execute
+      args: 
+        cmd:    ./gendata.sh
+    pre_run:
+    - name:     jobs
+      args:
+        limit:  3
+        match:  ct1
+    - name:     execute
+      args:
+        cmd:    /usr/bin/touch touch.start
+    runs:
+    - index:    1
+    - index:    2
+    - index:    3
+    - index:    4
+    - index:    5
+    - index:    6
+    - index:    7
+    - index:    8
+    - index:    9
+    - index:    10
+    post_run:   
+    - name:     execute
+      args:
+        cmd:    /usr/bin/touch touch.end
+    post_batch: 
+    - name:     execute
+      args:
+        cmd:    /usr/bin/rm ../data/nums

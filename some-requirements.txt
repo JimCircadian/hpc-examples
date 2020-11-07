@@ -1,0 +1,6 @@
+numpy
+pandas
+seaborn
+dask
+# env MPICC=/usr/lib64/openmpi3/bin/mpicc for CentOS at least
+mpi4py

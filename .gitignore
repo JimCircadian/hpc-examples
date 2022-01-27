@@ -7,3 +7,7 @@ venv/
 dask_worker_space/
 .idea/
 *.lock
+*.json
+*.npy
+*.npz
+*.log

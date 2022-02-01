@@ -1,6 +1,12 @@
+jupyter
 numpy
 pandas
 seaborn
 dask
 # env MPICC=/usr/lib64/openmpi3/bin/mpicc for CentOS at least
-mpi4py
+# mpi4py
+cartopy
+scikit-learn
+netCDF4
+xarray
+
